@@ -1,0 +1,65 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Categories{% endblock %}
+
+{% block content %}
+<h2>📂 Categories</h2>
+
+<!-- Formulario para crear nueva categoría -->
+<form id="create-category-form">
+    <input type="text" name="name" placeholder="Category name" required>
+    <textarea name="description" placeholder="Description"></textarea>
+    <button type="submit">➕ Add Category</button>
+</form>
+
+<hr>
+
+<!-- Lista de categorías -->
+<div id="category-list"></div>
+
+<script>
+    const apiUrl = '/library/api/categories/';  // Actualizado con '/library/'
+
+    function loadCategories() {
+        fetch(apiUrl)
+            .then(res => res.json())
+            .then(data => {
+                const list = document.getElementById('category-list');
+                list.innerHTML = '';
+                data.forEach(cat => {
+                    const div = document.createElement('div');
+                    div.innerHTML = `
+                        <strong>${cat.name}</strong> <br>
+                        ${cat.description || 'No description'}<br>
+                        <a href="/library/categories/${cat.slug}/">✏️ Edit</a>  <!-- Actualizado con '/library/' -->
+                        <hr>
+                    `;
+                    list.appendChild(div);
+                });
+            });
+    }
+
+    // Crear categoría
+    document.getElementById('create-category-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const data = {
+            name: formData.get('name'),
+            description: formData.get('description')
+        };
+
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(() => {
+            this.reset();
+            loadCategories();
+        });
+    });
+
+    loadCategories();
+</script>
+{% endblock %}

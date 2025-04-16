@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Library API{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+        header { margin-bottom: 20px; }
+        nav a { margin-right: 15px; }
+        .content { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        pre { background: #eee; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📚 Library API Client</h1>
+        <nav>
+            <a href="{% url 'categories' %}">Categories</a>
+            <a href="{% url 'authors' %}">Authors</a>
+            <a href="{% url 'books' %}">Books</a>
+        </nav>
+    </header>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

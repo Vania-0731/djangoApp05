@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from rest_framework import viewsets
 from .models import Category, Author, AuthorProfile, Publisher, Book, Publication
 from .serializers import *
@@ -25,3 +26,10 @@ class PublicationViewSet(viewsets.ModelViewSet):
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+
+
+def categories_view(request):
+    return render(request, 'library/category_list.html')
+
+def category_detail_view(request, slug):
+    return render(request, 'library/category_detail.html', {'slug': slug})
