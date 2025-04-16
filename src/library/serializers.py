@@ -36,7 +36,7 @@ class PublicationSerializer(serializers.ModelSerializer):
 class BookSerializer(serializers.ModelSerializer):
     author = AuthorSerializer()
     categories = CategorySerializer(many=True)
-    publishers = PublisherSerializer(many=True, source='publishers')
+    publishers = PublisherSerializer(many=True)
 
     class Meta:
         model = Book
