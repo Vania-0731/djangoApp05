@@ -22,3 +22,13 @@ def reserve_book(request):
     else:
         form = ReservationForm()
     return render(request, 'circulation/reserve_book.html', {'form': form})
+
+def return_book(request):
+    loan = Loan.objects.get(id=request.POST.get('loan_id'))
+    loan.return_date = request.POST.get('return_date')
+    loan.save()
+    return redirect('borrowing_history')
+
+def borrowing_history(request):
+    loans = Loan.objects.filter(member=request.user.member)
+    return render(request, 'circulation/borrowing_history.html', {'loans': loans})

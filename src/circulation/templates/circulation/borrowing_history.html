@@ -1,0 +1,33 @@
+{% extends 'circulation/base.html' %}
+
+{% block content %}
+    <h2>Borrowing History</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Book Title</th>
+                <th>Checkout Date</th>
+                <th>Due Date</th>
+                <th>Return Date</th>
+                <th>Late Fee</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for loan in loans %}
+                <tr>
+                    <td>{{ loan.book_copy.book.title }}</td>
+                    <td>{{ loan.checkout_date }}</td>
+                    <td>{{ loan.due_date }}</td>
+                    <td>{{ loan.return_date }}</td>
+                    <td>${{ loan.late_fee }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">No borrowing history available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
